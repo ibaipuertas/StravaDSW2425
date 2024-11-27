@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+import com.deusto.strava.entity.Reto;
+
 @Data
 public class RetoDTO {
 
@@ -80,6 +82,5 @@ public class RetoDTO {
 	public void setDeporte(String deporte) {
 		this.deporte = deporte;
 	}
-    
     
 }

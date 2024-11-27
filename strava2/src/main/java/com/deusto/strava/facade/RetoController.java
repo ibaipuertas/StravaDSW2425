@@ -27,18 +27,18 @@ public class RetoController {
      * @param retoDTO Información del reto.
      * @return Reto creado.
      */
-    @PostMapping
-    public ResponseEntity<RetoDTO> crearReto(
-            @RequestHeader("Authorization") String token,
-            @RequestBody RetoDTO retoDTO) {
-
-        // Validar el token antes de realizar la acción
-        validarToken(token);
-
-        // Crear el reto
-        RetoDTO retoCreado = retoService.crearReto(retoDTO);
-        return ResponseEntity.ok(retoCreado);
-    }
+//    @PostMapping
+//    public ResponseEntity<RetoDTO> crearReto(
+//            @RequestHeader("Authorization") String token,
+//            @RequestBody RetoDTO retoDTO) {
+//
+//        // Validar el token antes de realizar la acción
+//        validarToken(token);
+//
+//        // Crear el reto
+//        RetoDTO retoCreado = retoService.crearReto(retoDTO);
+//        return ResponseEntity.ok(retoCreado);
+//    }
 
     /**
      * Endpoint para obtener los retos activos.

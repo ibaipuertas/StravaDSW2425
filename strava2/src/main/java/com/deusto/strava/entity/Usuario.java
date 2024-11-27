@@ -13,9 +13,10 @@ public class Usuario {
 
     private String email;
     private String nombre;
+    private String contrasena;
     private String fechaNacimiento;
 
-    // Información opcional
+	// Información opcional
     private Double peso; // en kilogramos
     private Integer altura; // en centímetros
     private Integer frecuenciaCardiacaMaxima;
@@ -131,4 +132,11 @@ public class Usuario {
     public void eliminarRetoAceptado(Reto reto) {
         this.retosAceptados.remove(reto);
     }
+    public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
 }

@@ -1,5 +1,6 @@
 package com.deusto.strava.facade;
 
+import com.deusto.strava.dto.RegistroUsuarioDTO;
 import com.deusto.strava.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +16,20 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @PostMapping("/registro")
+    @Operation(summary = "Registro de usuario")
+    public ResponseEntity<String> registro(
+    		@RequestParam String email,
+    		@RequestParam String nombre,
+    		@RequestParam String fechaNacimiento,
+    		@RequestParam String contrasena,
+    		@RequestParam Double peso, // en kilogramos
+    		@RequestParam Integer altura) {// en centímetros)
+    	RegistroUsuarioDTO rUDTO = new RegistroUsuarioDTO(email, nombre, fechaNacimiento, contrasena, peso, altura) ;
+        usuarioService.registro(rUDTO);
+    	return ResponseEntity.ok("Usuario correctamente registrado!");
+    }
+    
     @PostMapping("/login")
     @Operation(summary = "Login de usuario")
     public ResponseEntity<String> login(
