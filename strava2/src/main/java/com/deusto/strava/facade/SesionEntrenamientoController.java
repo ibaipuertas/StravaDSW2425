@@ -43,10 +43,4 @@ public class SesionEntrenamientoController {
         return ResponseEntity.ok(sesiones);
     }
 
-    private void validarToken(String token) {
-        String email = tokenService.validarToken(token);
-        if (email == null) {
-            throw new IllegalArgumentException("Token inválido o expirado.");
-        }
-    }
 }

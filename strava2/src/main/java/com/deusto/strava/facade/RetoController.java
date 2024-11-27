@@ -92,7 +92,7 @@ public class RetoController {
         validarToken(token);
 
         // Aceptar el reto
-        retoService.aceptarReto(retoId);
+        retoService.aceptarReto(retoId, token);
         return ResponseEntity.ok("Reto aceptado con éxito.");
     }
 

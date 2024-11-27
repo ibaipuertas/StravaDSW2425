@@ -2,6 +2,8 @@ package com.deusto.strava.service;
 
 import org.springframework.stereotype.Service;
 
+import com.deusto.strava.entity.Usuario;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,8 +28,8 @@ public class TokenService {
      * @param token Token recibido.
      * @return Email asociado al token, o null si no es válido.
      */
-    public String validarToken(String token) {
-        return tokensActivos.get(token);
+    public Boolean validarToken(String token) {
+    	return tokensActivos.containsKey(token);
     }
 
     /**
@@ -36,6 +38,31 @@ public class TokenService {
      */
     public void eliminarToken(String token) {
         tokensActivos.remove(token);
+    }
+    
+    /**
+     * Obtiene el usuario asociado a un token activo.
+     *
+     * @param token Token del usuario.
+     * @return Usuario asociado, o null si el token no es válido.
+     */
+    public String getUsuarioPorToken(String token) {
+        return tokensActivos.get(token);
+    }
+
+    /**
+     * Encuentra un token asociado a un usuario activo.
+     *
+     * @param usuario Usuario cuya asociación con un token se desea buscar.
+     * @return Token asociado al usuario, o null si no existe.
+     */
+    public String findByUser(Usuario usuario) {
+        return tokensActivos.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().equals(usuario))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
     }
 }
 

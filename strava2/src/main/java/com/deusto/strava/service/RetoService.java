@@ -35,8 +35,8 @@ public class RetoService {
         reto.setDeporte(retoDTO.getDeporte());
         reto.setFechaInicio(retoDTO.getFechaInicio());
         reto.setFechaFin(retoDTO.getFechaFin());
-        reto.setMetaDistancia(retoDTO.getMetaDistancia());
-        reto.setMetaTiempo(retoDTO.getMetaTiempo());
+        reto.setDistanciaObjetivo(retoDTO.getDistanciaObjetivo());
+        reto.setTiempoObjetivo(retoDTO.getTiempoObjetivo());
         retoRepository.save(reto);
 
         return convertirEntidadADTO(reto);
@@ -61,7 +61,7 @@ public class RetoService {
      */
     public List<RetoDTO> obtenerRetosAceptados(String token) {
         // Validar el token y obtener el usuario correspondiente
-        Usuario usuario = obtenerUsuarioPorToken(token);
+        Usuario usuario = getUsuarioPorToken(token);
 
         // Retos aceptados por el usuario
         return usuario.getRetosAceptados()
@@ -99,22 +99,11 @@ public class RetoService {
         return new RetoDTO(
                 reto.getId(),
                 reto.getNombre(),
-                reto.getDeporte(),
                 reto.getFechaInicio(),
                 reto.getFechaFin(),
-                reto.getMetaDistancia(),
-                reto.getMetaTiempo()
+                reto.getDistanciaObjetivo(),
+                reto.getTiempoObjetivo(),
+                reto.getDeporte()
         );
-    }
-
-    /**
-     * Obtiene el usuario asociado a un token.
-     *
-     * @param token Token a validar.
-     * @return Usuario autenticado.
-     */
-    private Usuario obtenerUsuarioPorToken(String token) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByToken(token);
-        return usuarioOpt.orElseThrow(() -> new IllegalArgumentException("Token inválido o usuario no encontrado"));
     }
 }

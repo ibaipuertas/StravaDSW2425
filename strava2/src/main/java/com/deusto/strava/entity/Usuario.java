@@ -1,12 +1,10 @@
 package com.deusto.strava.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
-import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Data
 public class Usuario {
 
     @Id
@@ -15,86 +13,122 @@ public class Usuario {
 
     private String email;
     private String nombre;
-    private LocalDate fechaNacimiento;
+    private String fechaNacimiento;
 
-    private Double peso; // Opcional
-    private Double altura; // Opcional
-    private Integer fcMaxima; // Frecuencia cardíaca máxima
-    private Integer fcReposo; // Frecuencia cardíaca en reposo
+    // Información opcional
+    private Double peso; // en kilogramos
+    private Integer altura; // en centímetros
+    private Integer frecuenciaCardiacaMaxima;
+    private Integer frecuenciaCardiacaReposo;
 
-    @Enumerated(EnumType.STRING)
-    private TipoLogin tipoLogin; // Tipo de login: GOOGLE o META
+    private String token; // Token actual del usuario
+    private String tipoLogin; // Puede ser "Google" o "Meta"
 
-	public Long getId() {
-		return id;
-	}
+    // Relación con los retos aceptados
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_reto",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "reto_id")
+    )
+    private Set<Reto> retosAceptados = new HashSet<>();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Usuario() {}
 
-	public String getEmail() {
-		return email;
-	}
+    // Getters y setters
+    public Long getId() {
+        return id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public LocalDate getFechaNacimiento() {
-		return fechaNacimiento;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public Double getPeso() {
-		return peso;
-	}
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
 
-	public void setPeso(Double peso) {
-		this.peso = peso;
-	}
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
 
-	public Double getAltura() {
-		return altura;
-	}
+    public Double getPeso() {
+        return peso;
+    }
 
-	public void setAltura(Double altura) {
-		this.altura = altura;
-	}
+    public void setPeso(Double peso) {
+        this.peso = peso;
+    }
 
-	public Integer getFcMaxima() {
-		return fcMaxima;
-	}
+    public Integer getAltura() {
+        return altura;
+    }
 
-	public void setFcMaxima(Integer fcMaxima) {
-		this.fcMaxima = fcMaxima;
-	}
+    public void setAltura(Integer altura) {
+        this.altura = altura;
+    }
 
-	public Integer getFcReposo() {
-		return fcReposo;
-	}
+    public Integer getFrecuenciaCardiacaMaxima() {
+        return frecuenciaCardiacaMaxima;
+    }
 
-	public void setFcReposo(Integer fcReposo) {
-		this.fcReposo = fcReposo;
-	}
+    public void setFrecuenciaCardiacaMaxima(Integer frecuenciaCardiacaMaxima) {
+        this.frecuenciaCardiacaMaxima = frecuenciaCardiacaMaxima;
+    }
 
-	public TipoLogin getTipoLogin() {
-		return tipoLogin;
-	}
+    public Integer getFrecuenciaCardiacaReposo() {
+        return frecuenciaCardiacaReposo;
+    }
 
-	public void setTipoLogin(TipoLogin tipoLogin) {
-		this.tipoLogin = tipoLogin;
-	}
-    
+    public void setFrecuenciaCardiacaReposo(Integer frecuenciaCardiacaReposo) {
+        this.frecuenciaCardiacaReposo = frecuenciaCardiacaReposo;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getTipoLogin() {
+        return tipoLogin;
+    }
+
+    public void setTipoLogin(String tipoLogin) {
+        this.tipoLogin = tipoLogin;
+    }
+
+    public Set<Reto> getRetosAceptados() {
+        return retosAceptados;
+    }
+
+    public void setRetosAceptados(Set<Reto> retosAceptados) {
+        this.retosAceptados = retosAceptados;
+    }
+
+    public void aceptarReto(Reto reto) {
+        this.retosAceptados.add(reto);
+    }
+
+    public void eliminarRetoAceptado(Reto reto) {
+        this.retosAceptados.remove(reto);
+    }
 }

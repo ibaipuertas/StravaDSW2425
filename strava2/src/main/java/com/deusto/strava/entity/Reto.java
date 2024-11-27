@@ -1,91 +1,93 @@
 package com.deusto.strava.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
 @Entity
 public class Reto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
+    private String deporte; // ciclismo o running
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    private String deporte; // Ciclismo, Running
-    private Double DistanciaObjetivo;
-    private Integer TiempoObjetivo; // en mins
+    private Double distanciaObjetivo; // en kilómetros
+    private Integer tiempoObjetivo; // en minutos
 
-    @ManyToOne
-    private Usuario creador;
+    @ManyToMany(mappedBy = "retosAceptados")
+    private Set<Usuario> usuariosAceptaron = new HashSet<>();
 
-	public Long getId() {
-		return id;
-	}
+    public Reto() {}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    // Getters y setters
+    public Long getId() {
+        return id;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public LocalDate getFechaInicio() {
-		return fechaInicio;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setFechaInicio(LocalDate fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
+    public String getDeporte() {
+        return deporte;
+    }
 
-	public LocalDate getFechaFin() {
-		return fechaFin;
-	}
+    public void setDeporte(String deporte) {
+        this.deporte = deporte;
+    }
 
-	public void setFechaFin(LocalDate fechaFin) {
-		this.fechaFin = fechaFin;
-	}
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
 
-	public String getDeporte() {
-		return deporte;
-	}
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
 
-	public void setDeporte(String deporte) {
-		this.deporte = deporte;
-	}
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
 
-	public Double getDistanciaObjetivo() {
-		return DistanciaObjetivo;
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+
+    public Double getDistanciaObjetivo() {
+		return distanciaObjetivo;
 	}
 
 	public void setDistanciaObjetivo(Double distanciaObjetivo) {
-		DistanciaObjetivo = distanciaObjetivo;
+		this.distanciaObjetivo = distanciaObjetivo;
 	}
 
 	public Integer getTiempoObjetivo() {
-		return TiempoObjetivo;
+		return tiempoObjetivo;
 	}
 
 	public void setTiempoObjetivo(Integer tiempoObjetivo) {
-		TiempoObjetivo = tiempoObjetivo;
+		this.tiempoObjetivo = tiempoObjetivo;
 	}
 
-	public Usuario getCreador() {
-		return creador;
-	}
+	public Set<Usuario> getUsuariosAceptaron() {
+        return usuariosAceptaron;
+    }
 
-	public void setCreador(Usuario creador) {
-		this.creador = creador;
-	}
-
-    
-    
+    public void setUsuariosAceptaron(Set<Usuario> usuariosAceptaron) {
+        this.usuariosAceptaron = usuariosAceptaron;
+    }
 }
