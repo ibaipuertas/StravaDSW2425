@@ -59,16 +59,16 @@ public class RetoService {
      * @param token Token del usuario autenticado.
      * @return Lista de retos aceptados en formato DTO.
      */
-    public List<RetoDTO> obtenerRetosAceptados(String token) {
-        // Validar el token y obtener el usuario correspondiente
-        Usuario usuario = getUsuarioPorToken(token);
-
-        // Retos aceptados por el usuario
-        return usuario.getRetosAceptados()
-                .stream()
-                .map(this::convertirEntidadADTO)
-                .collect(Collectors.toList());
-    }
+//    public List<RetoDTO> obtenerRetosAceptados(String token) {
+//        // Validar el token y obtener el usuario correspondiente
+//        Usuario usuario = getUsuarioPorToken(token);
+//
+//        // Retos aceptados por el usuario
+//        return usuario.getRetosAceptados()
+//                .stream()
+//                .map(this::convertirEntidadADTO)
+//                .collect(Collectors.toList());
+//    }
 
     /**
      * Permite a un usuario aceptar un reto.
@@ -76,18 +76,18 @@ public class RetoService {
      * @param retoId ID del reto a aceptar.
      * @param token  Token del usuario autenticado.
      */
-    public void aceptarReto(Long retoId, String token) {
-        // Validar el token y obtener el usuario correspondiente
-        Usuario usuario = obtenerUsuarioPorToken(token);
-
-        // Buscar el reto a aceptar
-        Reto reto = retoRepository.findById(retoId)
-                .orElseThrow(() -> new IllegalArgumentException("Reto no encontrado"));
-
-        // Añadir el reto a la lista de retos aceptados del usuario
-        usuario.getRetosAceptados().add(reto);
-        usuarioRepository.save(usuario);
-    }
+//    public void aceptarReto(Long retoId, String token) {
+//        // Validar el token y obtener el usuario correspondiente
+//        Usuario usuario = obtenerUsuarioPorToken(token);
+//
+//        // Buscar el reto a aceptar
+//        Reto reto = retoRepository.findById(retoId)
+//                .orElseThrow(() -> new IllegalArgumentException("Reto no encontrado"));
+//
+//        // Añadir el reto a la lista de retos aceptados del usuario
+//        usuario.getRetosAceptados().add(reto);
+//        usuarioRepository.save(usuario);
+//    }
 
     /**
      * Convierte un objeto entidad `Reto` a su correspondiente DTO.

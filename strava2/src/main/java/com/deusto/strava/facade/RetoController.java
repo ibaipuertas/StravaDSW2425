@@ -64,17 +64,17 @@ public class RetoController {
      * @param token Token del usuario autenticado.
      * @return Lista de retos aceptados.
      */
-    @GetMapping("/aceptados")
-    public ResponseEntity<List<RetoDTO>> consultarRetosAceptados(
-            @RequestHeader("Authorization") String token) {
-
-        // Validar el token antes de realizar la acción
-        validarToken(token);
-
-        // Consultar retos aceptados
-        List<RetoDTO> retosAceptados = retoService.obtenerRetosAceptados();
-        return ResponseEntity.ok(retosAceptados);
-    }
+//    @GetMapping("/aceptados")
+//    public ResponseEntity<List<RetoDTO>> consultarRetosAceptados(
+//            @RequestHeader("Authorization") String token) {
+//
+//        // Validar el token antes de realizar la acción
+//        validarToken(token);
+//
+//        // Consultar retos aceptados
+//        List<RetoDTO> retosAceptados = retoService.obtenerRetosAceptados();
+//        return ResponseEntity.ok(retosAceptados);
+//    }
 
     /**
      * Endpoint para aceptar un reto.
@@ -83,18 +83,18 @@ public class RetoController {
      * @param retoId  ID del reto a aceptar.
      * @return Mensaje de éxito.
      */
-    @PostMapping("/{retoId}/aceptar")
-    public ResponseEntity<String> aceptarReto(
-            @RequestHeader("Authorization") String token,
-            @PathVariable Long retoId) {
-
-        // Validar el token antes de realizar la acción
-        validarToken(token);
-
-        // Aceptar el reto
-        retoService.aceptarReto(retoId, token);
-        return ResponseEntity.ok("Reto aceptado con éxito.");
-    }
+//    @PostMapping("/{retoId}/aceptar")
+//    public ResponseEntity<String> aceptarReto(
+//            @RequestHeader("Authorization") String token,
+//            @PathVariable Long retoId) {
+//
+//        // Validar el token antes de realizar la acción
+//        validarToken(token);
+//
+//        // Aceptar el reto
+//        retoService.aceptarReto(retoId, token);
+//        return ResponseEntity.ok("Reto aceptado con éxito.");
+//    }
 
     /**
      * Valida el token proporcionado. Si el token no es válido, lanza una excepción.
