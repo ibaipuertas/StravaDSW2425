@@ -16,7 +16,6 @@ public class SesionEntrenamientoService {
     private SesionEntrenamientoRepository sesionEntrenamientoRepository;
 
     public SesionEntrenamientoDTO crearSesionEntrenamiento(SesionEntrenamientoDTO sesionEntrenamientoDTO) {
-        // Crear entidad de sesión de entrenamiento a partir del DTO
         SesionEntrenamiento sesion = new SesionEntrenamiento();
         sesion.setTitulo(sesionEntrenamientoDTO.getTitulo());
         sesion.setDeporte(sesionEntrenamientoDTO.getDeporte());
@@ -27,17 +26,29 @@ public class SesionEntrenamientoService {
         // Guardar sesión en la base de datos
         SesionEntrenamiento sesionGuardada = sesionEntrenamientoRepository.save(sesion);
 
-        // Convertir la entidad a DTO y devolver
-        return new SesionEntrenamientoDTO(sesionGuardada.getId(), sesionGuardada.getTitulo(), sesionGuardada.getDeporte(),
-                sesionGuardada.getDistancia(), sesionGuardada.getFechaInicio(), sesionGuardada.getDuracion());
+        // Convertir la entidad guardada (que incluye el id) a un DTO de respuesta
+        return new SesionEntrenamientoDTO(
+                sesionGuardada.getTitulo(),
+                sesionGuardada.getDeporte(),
+                sesionGuardada.getDistancia(),
+                sesionGuardada.getFechaInicio(),
+                sesionGuardada.getDuracion()
+        );
     }
 
     public List<SesionEntrenamientoDTO> obtenerMisSesiones() {
         // Obtener todas las sesiones de entrenamiento
         List<SesionEntrenamiento> sesiones = sesionEntrenamientoRepository.findAll();
 
-        // Convertir las entidades a DTOs
-        return sesiones.stream().map(sesion -> new SesionEntrenamientoDTO(sesion.getId(), sesion.getTitulo(), sesion.getDeporte(),
-                sesion.getDistancia(), sesion.getFechaInicio(), sesion.getDuracion())).collect(Collectors.toList());
+        // Convertir las entidades a DTOs de respuesta
+        return sesiones.stream()
+                .map(sesion -> new SesionEntrenamientoDTO(
+                        sesion.getTitulo(),
+                        sesion.getDeporte(),
+                        sesion.getDistancia(),
+                        sesion.getFechaInicio(),
+                        sesion.getDuracion()
+                ))
+                .collect(Collectors.toList());
     }
 }

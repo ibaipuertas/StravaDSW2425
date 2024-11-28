@@ -22,25 +22,24 @@ public class SesionEntrenamientoController {
     @Autowired
     private TokenService tokenService;
 
-//    @PostMapping("/crear")
-//    @Operation(summary = "Crear una nueva sesión de entrenamiento")
-//    public ResponseEntity<SesionEntrenamientoDTO> crearSesionEntrenamiento(
-//            @RequestHeader("Authorization") String token,
-//            @RequestBody SesionEntrenamientoDTO sesionEntrenamientoDTO) {
-//        
-//        validarToken(token); // Validar que el token es válido.
-//        SesionEntrenamientoDTO nuevaSesionDTO = sesionEntrenamientoService.crearSesionEntrenamiento(sesionEntrenamientoDTO);
-//        return ResponseEntity.ok(nuevaSesionDTO);
-//    }
+    @PostMapping("/crear")
+    @Operation(summary = "Crear una nueva sesión de entrenamiento")
+    public ResponseEntity<SesionEntrenamientoDTO> crearSesionEntrenamiento(
+            @RequestHeader("token") String token,
+            @RequestBody SesionEntrenamientoDTO sesionEntrenamientoDTO) {
 
-//    @GetMapping("/mis-sesiones")
-//    @Operation(summary = "Obtener las sesiones de entrenamiento del usuario")
-//    public ResponseEntity<List<SesionEntrenamientoDTO>> obtenerMisSesiones(
-//            @RequestHeader("Authorization") String token) {
-//        
-//        validarToken(token); // Validar que el token es válido.
-//        List<SesionEntrenamientoDTO> sesiones = sesionEntrenamientoService.obtenerMisSesiones();
-//        return ResponseEntity.ok(sesiones);
-//    }
+        tokenService.validarToken(token); // Validar que el token es válido.
+        SesionEntrenamientoDTO nuevaSesionDTO = sesionEntrenamientoService.crearSesionEntrenamiento(sesionEntrenamientoDTO);
+        return ResponseEntity.ok(nuevaSesionDTO);
+    }
 
+    @GetMapping("/mis-sesiones")
+    @Operation(summary = "Obtener las sesiones de entrenamiento del usuario")
+    public ResponseEntity<List<SesionEntrenamientoDTO>> obtenerMisSesiones(
+            @RequestHeader("token") String token) {
+
+        tokenService.validarToken(token); // Validar que el token es válido.
+        List<SesionEntrenamientoDTO> sesiones = sesionEntrenamientoService.obtenerMisSesiones();
+        return ResponseEntity.ok(sesiones);
+    }
 }

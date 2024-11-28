@@ -20,6 +20,10 @@ public class SesionEntrenamiento {
 
     @ManyToOne
     private Usuario usuario;
+    
+    public SesionEntrenamiento() {
+    	
+    }
 
 	public Long getId() {
 		return id;

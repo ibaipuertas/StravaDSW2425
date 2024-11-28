@@ -23,15 +23,21 @@ public class UsuarioService {
 
     //RECIBE EL REGISTROUSUARIODTO , LO CONVIERTE A USUARIO Y LO GUARDA EN BD
     public void registro(RegistroUsuarioDTO rUDTO) {
-    	Usuario u = new Usuario();
-    	u.setEmail(rUDTO.getEmail());
-    	u.setNombre(rUDTO.getNombre());
-    	u.setContrasena(rUDTO.getContraseña());
-    	u.setFechaNacimiento(rUDTO.getFechaNacimiento());
-    	u.setPeso(rUDTO.getPeso());
-    	u.setAltura(rUDTO.getAltura());
-    	
-    	usuarioRepository.save(u);
+        // Verificar si el correo ya está registrado
+        Usuario usuarioExistente = usuarioRepository.findByEmail(rUDTO.getEmail());
+        if (usuarioExistente!=null) {
+            throw new IllegalArgumentException("El correo ya está registrado.");
+        }
+
+        Usuario u = new Usuario();
+        u.setEmail(rUDTO.getEmail());
+        u.setNombre(rUDTO.getNombre());
+        u.setContrasena(rUDTO.getContraseña());
+        u.setFechaNacimiento(rUDTO.getFechaNacimiento());
+        u.setPeso(rUDTO.getPeso());
+        u.setAltura(rUDTO.getAltura());
+        
+        usuarioRepository.save(u);
     }
     
     public String login(String email, String password, String tipoLogin) {
@@ -45,7 +51,13 @@ public class UsuarioService {
             throw new IllegalArgumentException("Usuario no registrado en el sistema.");
         }
 
-        // Generar y devolver el token.
+        // Verificar si el usuario ya está logueado
+        String tokenExistente = tokenService.findTokenByEmail(email);
+        if (tokenExistente != null) {
+            throw new IllegalArgumentException("El usuario ya está logueado.");
+        }
+
+        // Generar y devolver el token
         return tokenService.generarToken(email);
     }
 
@@ -54,6 +66,10 @@ public class UsuarioService {
      * @param token Token a invalidar.
      */
     public void logout(String token) {
-        tokenService.eliminarToken(token);
+    	if(tokenService.validarToken(token)) {
+            tokenService.eliminarToken(token);	
+    	}else {
+    		throw new IllegalArgumentException("Usuario no logueado.");
+    	}
     }
 }

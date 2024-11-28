@@ -1,6 +1,8 @@
 package com.deusto.strava.entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +16,7 @@ public class Usuario {
     private String email;
     private String nombre;
     private String contrasena;
-    private String fechaNacimiento;
+    private LocalDate fechaNacimiento;
 
 	// Información opcional
     private Double peso; // en kilogramos
@@ -61,11 +63,11 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

@@ -1,5 +1,6 @@
 package com.deusto.strava.external;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.deusto.strava.dao.UsuarioRepository;
@@ -9,7 +10,12 @@ import com.deusto.strava.entity.Usuario;
 @Service
 public class AuthService {
 
+	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+    public AuthService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public boolean verificarLogin(String email, String password, String tipoLogin) {
         switch (tipoLogin.toUpperCase()) {

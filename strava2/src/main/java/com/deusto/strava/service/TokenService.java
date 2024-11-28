@@ -2,6 +2,7 @@ package com.deusto.strava.service;
 
 import org.springframework.stereotype.Service;
 
+import com.deusto.strava.dao.UsuarioRepository;
 import com.deusto.strava.entity.Usuario;
 
 import java.util.Map;
@@ -12,13 +13,14 @@ public class TokenService {
 
     private final Map<String, String> tokensActivos = new ConcurrentHashMap<>();
 
+    UsuarioRepository usuarioRepository;
     /**
      * Genera y almacena un token para un usuario.
      * @param email Email del usuario.
      * @return Token generado.
      */
     public String generarToken(String email) {
-        String token = String.valueOf(System.currentTimeMillis());
+        String token = String.valueOf(System.currentTimeMillis()+email);
         tokensActivos.put(token, email);
         return token;
     }
@@ -60,6 +62,15 @@ public class TokenService {
         return tokensActivos.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().equals(usuario))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
+    }
+    
+    public String findTokenByEmail(String email) {
+        return tokensActivos.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().equals(email))
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(null);

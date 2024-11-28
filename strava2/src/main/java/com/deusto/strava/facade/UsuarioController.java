@@ -4,6 +4,9 @@ import com.deusto.strava.dto.RegistroUsuarioDTO;
 import com.deusto.strava.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +22,15 @@ public class UsuarioController {
     @PostMapping("/registro")
     @Operation(summary = "Registro de usuario")
     public ResponseEntity<String> registro(
-    		@RequestParam String email,
-    		@RequestParam String nombre,
-    		@RequestParam String fechaNacimiento,
-    		@RequestParam String contrasena,
-    		@RequestParam Double peso, // en kilogramos
-    		@RequestParam Integer altura) {// en centímetros)
-    	RegistroUsuarioDTO rUDTO = new RegistroUsuarioDTO(email, nombre, fechaNacimiento, contrasena, peso, altura) ;
+    		@RequestParam("email") String email,
+    		@RequestParam("nombre") String nombre,
+    		@RequestParam("fechaNacimiento") String fechaNacimiento,
+    		@RequestParam("contrasena") String contrasena,
+    		@RequestParam("peso") Double peso, // en kilogramos
+    		@RequestParam("altura") Integer altura) {// en centímetros)
+    	
+        LocalDate nacimiento = LocalDate.parse(fechaNacimiento);
+    	RegistroUsuarioDTO rUDTO = new RegistroUsuarioDTO(email, nombre, nacimiento, contrasena, peso, altura) ;
         usuarioService.registro(rUDTO);
     	return ResponseEntity.ok("Usuario correctamente registrado!");
     }
@@ -33,16 +38,16 @@ public class UsuarioController {
     @PostMapping("/login")
     @Operation(summary = "Login de usuario")
     public ResponseEntity<String> login(
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String tipoLogin) {
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam("tipoLogin") String tipoLogin) {
         String token = usuarioService.login(email, password, tipoLogin);
         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/logout")
     @Operation(summary = "Logout de usuario")
-    public ResponseEntity<String> logout(@RequestParam String token) {
+    public ResponseEntity<String> logout(@RequestParam("token") String token) {
         usuarioService.logout(token);
         return ResponseEntity.ok("Logout exitoso.");
     }

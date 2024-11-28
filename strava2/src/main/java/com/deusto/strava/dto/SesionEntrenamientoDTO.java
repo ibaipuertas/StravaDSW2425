@@ -4,15 +4,16 @@ import java.time.LocalDateTime;
 
 public class SesionEntrenamientoDTO {
 
-    private Long id;
     private String titulo;
     private String deporte;
     private Double distancia; // en km
     private LocalDateTime fechaInicio;
     private Integer duracion; // en minutos
 
-    public SesionEntrenamientoDTO(Long id, String titulo, String deporte, Double distancia, LocalDateTime fechaInicio, Integer duracion) {
-        this.id = id;
+    public SesionEntrenamientoDTO() {
+    }
+    
+    public SesionEntrenamientoDTO(String titulo, String deporte, Double distancia, LocalDateTime fechaInicio, Integer duracion) {
         this.titulo = titulo;
         this.deporte = deporte;
         this.distancia = distancia;
@@ -20,13 +21,6 @@ public class SesionEntrenamientoDTO {
         this.duracion = duracion;
     }
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getTitulo() {
 		return titulo;
