@@ -1,14 +1,9 @@
 package com.deusto.strava.dto;
 
-import lombok.Data;
-
 import java.time.LocalDate;
 
-import com.deusto.strava.entity.Reto;
-
-@Data
-public class RetoDTO {
-
+public class RetoDTOResponse {
+	private Long id;
     private String nombre;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
@@ -16,8 +11,9 @@ public class RetoDTO {
     private Integer tiempoObjetivo; // en minutos
     private String deporte;
 
-    public RetoDTO(String nombre, LocalDate fechaInicio, LocalDate fechaFin, Double distanciaObjetivo, Integer tiempoObjetivo, String deporte) {
-        this.nombre = nombre;
+    public RetoDTOResponse(Long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, Double distanciaObjetivo, Integer tiempoObjetivo, String deporte) {
+        this.id = id;
+    	this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.distanciaObjetivo = distanciaObjetivo;
@@ -25,7 +21,15 @@ public class RetoDTO {
         this.deporte = deporte;
     }
 
-    public RetoDTO() {
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public RetoDTOResponse() {
     	
     }
 
@@ -76,5 +80,5 @@ public class RetoDTO {
 	public void setDeporte(String deporte) {
 		this.deporte = deporte;
 	}
-    
+  
 }

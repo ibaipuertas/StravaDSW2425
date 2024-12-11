@@ -48,8 +48,9 @@ public class TokenService {
      * @param token Token del usuario.
      * @return Usuario asociado, o null si el token no es válido.
      */
-    public String getUsuarioPorToken(String token) {
-        return tokensActivos.get(token);
+    public Usuario getUsuarioPorToken(String token) {
+        String mail = tokensActivos.get(token);
+        return usuarioRepository.findByEmail(mail);
     }
 
     /**
